@@ -1,0 +1,31 @@
+.dropdownWidget {
+    ul{
+        
+        background-color: #fff;
+        
+        list-style-type: none;
+        border: 1px solid #a0a0a0;
+        border-top: 0;
+
+        width: 100%;
+        cursor: pointer;
+
+        > li {
+            padding: 10px;
+            margin-left: -2.5em;
+            &:hover {
+                color: #fff;
+                background: #005ea8;
+             }
+            
+        }
+        
+    }&
+    .choice{
+        border: 1px solid #a0a0a0;
+        padding:10px;
+    }&
+    .deal{
+        float: right;
+    }
+}

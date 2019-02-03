@@ -1,0 +1,14 @@
+<div class="dropdownWidget" (click)="toggelWidget()">
+  <div class="choice" *ngFor="let ch of choice" >
+    <span>{{ch.title}}</span>
+    <span *ngIf="ch.deal" class="deal"> ab {{ ch.deal }} mtl.</span>
+    <span *ngIf="!ch.deal" class="deal"> keine Angebote.</span>
+  </div>
+  <ul class="dropdown" *ngIf="toogle">
+      <li *ngFor="let d of data" value="d.id" (click)="setOption(d)">
+        <span>{{d.title}}</span>
+        <span *ngIf="d.deal" class="deal"> | ab {{ d.deal }} mtl.</span>
+        <span *ngIf="!d.deal" class="deal"> | keine Angebote.</span>
+      </li>
+  </ul>
+</div>
