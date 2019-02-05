@@ -1,14 +1,18 @@
-<div class="dropdownWidget" (click)="toggelWidget()">
+<div class="dropdownWidget" (click)="toggelWidget($event)" [ngClass]="toogle ? 'opened' : null">
   <div class="choice" *ngFor="let ch of choice" >
     <span>{{ch.title}}</span>
-    <span *ngIf="ch.deal" class="deal"> ab {{ ch.deal }} mtl.</span>
-    <span *ngIf="!ch.deal" class="deal"> keine Angebote.</span>
+    <div *ngIf="deal" class="d-inline">
+      <span *ngIf="ch.deal" class="deal"> ab {{ ch.deal }} mtl.</span>
+      <span *ngIf="!ch.deal" class="deal"> keine Angebote.</span>
+    </div>
   </div>
   <ul class="dropdown" *ngIf="toogle">
-      <li *ngFor="let d of data" value="d.id" (click)="setOption(d)">
+      <li *ngFor="let d of data; let i = index" value="d.id" (click)="setOption(d, i)" [ngClass]="i == upDown ? 'selectedItem' : null">
         <span>{{d.title}}</span>
-        <span *ngIf="d.deal" class="deal"> | ab {{ d.deal }} mtl.</span>
-        <span *ngIf="!d.deal" class="deal"> | keine Angebote.</span>
+        <div *ngIf="deal" class="d-inline">
+          <span *ngIf="d.deal" class="deal"> ab {{ d.deal }} mtl.</span>
+          <span *ngIf="!d.deal" class="deal"> keine Angebote.</span>
+        </div>
       </li>
   </ul>
 </div>

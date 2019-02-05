@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, HostListener } from '@angular/core';
+import { Component, OnInit, Input, HostListener, ElementRef } from '@angular/core';
 
 @Component({
   selector: 'app-dropdown-widget',
@@ -7,23 +7,27 @@ import { Component, OnInit, Input, HostListener } from '@angular/core';
 })
 export class DropdownWidgetComponent implements OnInit {
 
-  @Input() data: string;
+
+  @Input() data: any;
+  @Input() deal: any;
   choice: any = [];
   toogle: boolean = false;
   upDown : any = 0;
-  constructor() { }
+
+  constructor(private ef : ElementRef) { }
 
   ngOnInit() {
     this.choice.push(this.data[0]);
   }
 
-  setOption(d){
+  setOption(d, i){
     this.choice = [];
     this.choice.push(d);
+    this.upDown = i;
 
   }
 
-  toggelWidget(){
+  toggelWidget(event){
     this.toogle = !this.toogle;
   }
 
@@ -32,21 +36,29 @@ export class DropdownWidgetComponent implements OnInit {
     this.toogle = false
   }
 
-  @HostListener('document:click')
-  clickoutside() {
-    //this.toogle ? this.toogle = false : null;
-  }
+  @HostListener('document:click', ['$event.target'])
+  clickoutside(targetElement) {
 
+    const clickedInside = this.ef.nativeElement.contains(targetElement);
+        if (!clickedInside){
+          this.toogle = false;
+
+        }
+  }
+   
+    
   @HostListener('document:keydown', ['$event'])
   handleKeyboardEvent(event: KeyboardEvent) { 
-
-    if(this.upDown <= this.data.length || this.upDown >= 0){
-      if (event.key === "ArrowDown") {
-        this.upDown < this.data.length - 1 ? this.upDown++ : null;
-        this.setOption(this.data[this.upDown]);
-      }else if (event.key === "ArrowUp"){
-        this.upDown > 0 ? this.upDown-- : null;
-        this.setOption(this.data[this.upDown]);
+    /** if the component has a class opened then use arrows */
+    if(this.ef.nativeElement.querySelector('.opened') != undefined){
+      if(this.upDown <= this.data.length || this.upDown >= 0){
+        if (event.key === "ArrowDown") {
+          this.upDown < this.data.length - 1 ? this.upDown++ : null;
+          this.setOption(this.data[this.upDown], this.upDown);
+        }else if (event.key === "ArrowUp"){
+          this.upDown > 0 ? this.upDown-- : null;
+          this.setOption(this.data[this.upDown], this.upDown);
+        }
       }
     }
   }

@@ -7,7 +7,7 @@ import { WofurInterface } from '../wofur-interface';
   styleUrls: ['./wofur.component.scss']
 })
 export class WofurComponent implements OnInit {
-
+  name: any;
   data: WofurInterface[] = [
     {
       id: 1,
@@ -16,7 +16,8 @@ export class WofurComponent implements OnInit {
     },
     {
       id: 1,
-      title : "Freie Verwendung"
+      title : "Freie Verwendung",
+      deal: 100,
     },
     {
       id: 2,
